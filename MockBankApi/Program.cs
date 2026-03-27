@@ -11,11 +11,6 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
 app.MapGet("alpha/accounts/{accountId}/transactions", (string accountId) =>
 {
     var faker = new Faker<AlphaTransaction>()
@@ -29,9 +24,30 @@ app.MapGet("alpha/accounts/{accountId}/transactions", (string accountId) =>
     return Results.Ok(faker.Generate(20));
 });
 
-app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+app.MapGet("beta/accounts/{accountRef}/transactions", (string accountRef) =>
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+    var faker = new Faker<BetaTransaction>()
+        .RuleFor(t => t.transaction_id, f => f.Random.Guid().ToString())
+        .RuleFor(t => t.account_id, f => accountRef)
+        .RuleFor(t => t.amount_cents, f => f.Random.Int(-20000, 150000))
+        .RuleFor(t => t.currency_code, f => "USD")
+        .RuleFor(t => t.vendor_name, f => f.Company.CompanyName())
+        .RuleFor(t => t.transaction_date, f => f.Date.Past(1).ToString("yyyy-MM-dd"));
+
+    return Results.Ok(faker.Generate(20));
+});
+
+app.MapGet("/gamma/accounts/{accountNumber}/transactions", (string accountNumber) =>
+{
+    var faker = new Faker<GammaTransaction>()
+        .RuleFor(t => t.Id, f => f.IndexFaker + 1)
+        .RuleFor(t => t.AccountNumber, f => accountNumber)
+        .RuleFor(t => t.Value, f => f.Finance.Amount(-150, 2000).ToString("F2"))
+        .RuleFor(t => t.CurrencyCode, f => "GBP")
+        .RuleFor(t => t.Description, f => f.Commerce.ProductName())
+        .RuleFor(t => t.PostedAt, f => f.Date.Past(1).ToString("o")); // ISO 8601
+
+    return Results.Ok(faker.Generate(20));
+});
+
+app.Run();
