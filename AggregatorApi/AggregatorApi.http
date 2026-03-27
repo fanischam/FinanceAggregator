@@ -1,0 +1,6 @@
+@AggregatorApi_HostAddress = http://localhost:5131
+
+GET {{AggregatorApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
