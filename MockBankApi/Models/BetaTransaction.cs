@@ -1,10 +1,12 @@
 ﻿namespace MockBankApi.Models
 {
-    public record BetaTransaction(
-        string transaction_id,
-        string account_id,
-        int amount_cents,
-        string currency_code,
-        string vendor_name,
-        string transaction_date);
+    public class BetaTransaction
+    {
+        public string transaction_id { get; set; }
+        public string account_id { get; set; }
+        public int amount_cents { get; set; }
+        public string currency_code { get; set; }
+        public string vendor_name { get; set; }
+        public string transaction_date { get; set; }
+    }
 }

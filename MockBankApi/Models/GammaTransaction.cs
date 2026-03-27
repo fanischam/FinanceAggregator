@@ -1,10 +1,12 @@
 ﻿namespace MockBankApi.Models
 {
-    record GammaTransaction(
-        int Id,
-        string AccountNumber,
-        string Value,
-        string CurrencyCode,
-        string Description,
-        String PostedAt);
+    public class GammaTransaction
+    {
+        public int Id { get; set; }
+        public string AccountNumber { get; set; }
+        public string Value { get; set; }
+        public string CurrencyCode { get; set; }
+        public string Description { get; set; }
+        public string PostedAt { get; set; }
+    }
 }
