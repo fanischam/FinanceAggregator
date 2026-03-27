@@ -1,7 +1,7 @@
 ﻿namespace MockBankApi.Models
 {
     record GammaTransaction(
-        int id,
+        int Id,
         string AccountNumber,
         string Value,
         string CurrencyCode,
