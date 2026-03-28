@@ -23,6 +23,15 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
+app.MapGet("/accounts/{accountId}/transactions", async (
+    string accountId,
+    AggregatorService aggregator,
+    CancellationToken ct) =>
+{
+    var transactions = await aggregator.GetAllTransactionsAsync(accountId, ct);
+    return Results.Ok(transactions);
+});
+
 app.UseHttpsRedirection();
 
 
