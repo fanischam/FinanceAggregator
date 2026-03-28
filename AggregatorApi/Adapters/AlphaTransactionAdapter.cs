@@ -28,8 +28,8 @@ namespace AggregatorApi.Adapters
         /// <summary>
         /// Converts the given amount from the specified currency to EUR using hardcoded exchange rates.
         /// </summary>
-        /// <param name="amount">The transaction ammouunt</param>
-        /// <param name="currency">The currency to convert the ammount to</param>
+        /// <param name="amount">The transaction amouunt</param>
+        /// <param name="currency">The currency to convert the amount to</param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException">Throws if currency code was incorrect</exception>
         private decimal ConvertToEur(decimal amount, string currency)
