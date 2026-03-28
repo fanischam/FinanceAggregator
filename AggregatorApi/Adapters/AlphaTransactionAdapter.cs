@@ -29,10 +29,10 @@ namespace AggregatorApi.Adapters
         /// Converts the given amount from the specified currency to EUR using hardcoded exchange rates.
         /// </summary>
         /// <param name="amount">The transaction amouunt</param>
-        /// <param name="currency">The currency to convert the amount to</param>
+        /// <param name="currencyCode">The currency to convert the amount to</param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException">Throws if currency code was incorrect</exception>
-        private decimal ConvertToEur(decimal amount, string currency)
+        private static decimal ConvertToEur(decimal amount, string currencyCode)
         {
             var exchangeRates = new Dictionary<string, decimal>
             {
@@ -41,11 +41,11 @@ namespace AggregatorApi.Adapters
                 { "EUR", 1m }
             };
 
-            if (exchangeRates.TryGetValue(currency.ToUpper(), out var rate))
+            if (exchangeRates.TryGetValue(currencyCode.ToUpper(), out var rate))
             {
                 return Math.Round(amount * rate, 2);
             }
-            throw new InvalidOperationException($"Unsupported currency: {currency}");
+            throw new InvalidOperationException($"Unsupported currency: {currencyCode}");
         }
 
         private record AlphaRawTransaction(

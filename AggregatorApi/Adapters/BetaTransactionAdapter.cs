@@ -33,7 +33,7 @@ namespace AggregatorApi.Adapters
         /// <param name="currencyCode">The currency code</param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException">Throws if incorrect currency code</exception>
-        private decimal ConvertToEur(int amountCents, string currencyCode)
+        private static decimal ConvertToEur(int amountCents, string currencyCode)
         {
             var exchangeRates = new Dictionary<string, decimal>
             {
