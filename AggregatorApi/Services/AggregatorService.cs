@@ -14,7 +14,7 @@ namespace AggregatorApi.Services
         /// <param name="accountId">The account to fetch transactions</param>
         /// <param name="ct">Cancellation Token</param>
         /// <returns>The list of transactions</returns>
-        public async Task<IEnumerable<Transaction>> GetTransactionsAsync(string accountId, CancellationToken ct = default)
+        public async Task<IEnumerable<Transaction>> GetAllTransactionsAsync(string accountId, CancellationToken ct = default)
         {
             var tasks = _adapters.Select(async adapter =>
             {
