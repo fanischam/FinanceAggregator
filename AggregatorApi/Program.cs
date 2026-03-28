@@ -1,6 +1,23 @@
+using AggregatorApi.Adapters;
+using AggregatorApi.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Registering Http Clients, one for each bank
+builder.Services.AddHttpClient<AlphaTransactionAdapter>(c =>
+    c.BaseAddress = new Uri("https://localhost:7059/"));
+
+builder.Services.AddHttpClient<BetaTransactionAdapter>(c =>
+    c.BaseAddress = new Uri("https://localhost:7059/"));
+
+builder.Services.AddHttpClient<GammaTransactionAdapter>(c =>
+    c.BaseAddress = new Uri("https://localhost:7059/"));
+
+builder.Services.AddTransient<ITransactionAdapter, AlphaTransactionAdapter>();
+builder.Services.AddTransient<ITransactionAdapter, BetaTransactionAdapter>();
+builder.Services.AddTransient<ITransactionAdapter, GammaTransactionAdapter>();
+
+builder.Services.AddTransient<AggregatorService>();
 
 var app = builder.Build();
 
@@ -8,27 +25,6 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-});
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
