@@ -31,7 +31,7 @@ namespace AggregatorApi.Adapters
         /// <param name="amount">The transaction ammouunt</param>
         /// <param name="currency">The currency to convert the ammount to</param>
         /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="InvalidOperationException">Throws if currency code was incorrect</exception>
         private decimal ConvertToEur(decimal amount, string currency)
         {
             var exchangeRates = new Dictionary<string, decimal>
